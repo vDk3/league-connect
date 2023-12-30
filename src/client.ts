@@ -15,7 +15,8 @@ export interface LeagueClientOptions {
    *
    * Default: 2500
    */
-  pollInterval: number
+  pollInterval: number,
+  name: string
 }
 
 export class LeagueClient extends EventEmitter {
