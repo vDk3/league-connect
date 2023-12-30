@@ -39,6 +39,8 @@ export class LeagueClient extends EventEmitter {
       if (this.credentials === undefined || !processExists(this.credentials.pid)) {
         // Invalidated credentials or no LeagueClientUx process, fail
         throw new ClientNotFoundError()
+      } else {
+        this.emit("connect", this.credentials)
       }
 
       this.onTick()
@@ -73,6 +75,7 @@ export class LeagueClient extends EventEmitter {
         // Current credentials were invalidated, wait for
         // client to come back up
         const credentials = await authenticate({
+          name: this.options && this.options.name ? this.options.name : 'LeagueClientUx',
           awaitConnection: true,
           pollInterval: this.options?.pollInterval ?? DEFAULT_POLL_INTERVAL
         })
